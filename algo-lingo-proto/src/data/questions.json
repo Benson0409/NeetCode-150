@@ -1,0 +1,362 @@
+[
+  {
+    "problemId": "217",
+    "questions": [
+      {
+        "id": "217_q1",
+        "question": "在 Python 中，哪一種資料結構最適合用來快速檢查元素是否曾經出現過？",
+        "options": ["List (陣列)", "Set (集合)", "Tuple (元組)", "Queue (佇列)"],
+        "answer": 1,
+        "explanation": "Set 的底層是雜湊表，查詢時間複雜度為 O(1)，非常適合用來檢查重複元素。"
+      },
+      {
+        "id": "217_q2",
+        "question": "如果使用排序 (Sorting) 來解 Contains Duplicate，時間複雜度會是多少？",
+        "options": ["O(N)", "O(N log N)", "O(N^2)", "O(1)"],
+        "answer": 1,
+        "explanation": "最佳的排序演算法（如 Timsort）需要 O(N log N) 的時間。"
+      },
+      {
+        "id": "217_q3",
+        "question": "在解答中，`seen.add(num)` 的作用是什麼？",
+        "options": ["將數字相加", "將數字加入陣列末端", "將數字加入 Hash Set 中記錄", "計算數字的出現次數"],
+        "answer": 2,
+        "explanation": "add() 是 Python Set 的方法，用於將元素加入集合中。"
+      },
+      {
+        "id": "217_q4",
+        "question": "當陣列中有重複元素時，我們應該回傳什麼？",
+        "options": ["True", "False", "None", "0"],
+        "answer": 0,
+        "explanation": "題目要求包含重複元素時回傳 True。"
+      },
+      {
+        "id": "217_q5",
+        "question": "使用 Set 解題的空間複雜度是多少？",
+        "options": ["O(1)", "O(log N)", "O(N)", "O(N^2)"],
+        "answer": 2,
+        "explanation": "最差情況下（全不重複），Set 會儲存 N 個元素，因此空間複雜度為 O(N)。"
+      }
+    ]
+  },
+  {
+    "problemId": "242",
+    "questions": [
+      {
+        "id": "242_q1",
+        "question": "Valid Anagram 題目的核心概念是什麼？",
+        "options": ["計算字串長度", "比較兩個字串的字母出現頻率是否完全相同", "檢查字串是否為迴文", "找出最長子字串"],
+        "answer": 1,
+        "explanation": "Anagram 指的是兩個字串的字母組成與數量完全一致，只是排列順序不同。"
+      },
+      {
+        "id": "242_q2",
+        "question": "如果兩個字串長度不同，應該如何處理？",
+        "options": ["直接回傳 True", "直接回傳 False", "繼續檢查字母頻率", "將較短的字串補齊"],
+        "answer": 1,
+        "explanation": "長度不同絕對不可能是 Anagram，因此可以提早 Return False 節省時間。"
+      },
+      {
+        "id": "242_q3",
+        "question": "解題思路中使用大小為 26 的陣列，其用途是什麼？",
+        "options": ["儲存 26 個英文字母的 ASCII 碼", "記錄 a 到 z 每個字母的出現次數差值", "沒有特別用途", "用來排序字串"],
+        "answer": 1,
+        "explanation": "因為題目限定只有小寫字母，所以可以用 26 格的陣列來抵消計算 s 與 t 的字母頻率。"
+      },
+      {
+        "id": "242_q4",
+        "question": "在 Python 中，哪一個內建模組可以最快地幫我們計算字元頻率？",
+        "options": ["math.Counter", "collections.Counter", "itertools.count", "string.Counter"],
+        "answer": 1,
+        "explanation": "collections.Counter 會自動將 Iterable 轉換為頻率字典，是解 Anagram 的神器。"
+      },
+      {
+        "id": "242_q5",
+        "question": "如果輸入包含 Unicode 字元，我們應該如何修改解法？",
+        "options": ["增加陣列大小到 128", "改用 dict (雜湊表) 來記錄頻率", "先將 Unicode 轉為 ASCII", "無法處理 Unicode"],
+        "answer": 1,
+        "explanation": "Unicode 字元數量龐大，無法用固定大小的陣列，改用動態的 Hash Map (dict) 是最佳解。"
+      }
+    ]
+  },
+  {
+    "problemId": "1",
+    "questions": [
+      {
+        "id": "1_q1",
+        "question": "Two Sum 要求回傳什麼？",
+        "options": ["兩個數字的值", "兩個數字的索引 (Index)", "兩個數字的總和", "布林值 True/False"],
+        "answer": 1,
+        "explanation": "題目明確要求回傳和為 target 的那兩個數字的 Index 陣列。"
+      },
+      {
+        "id": "1_q2",
+        "question": "為了達到 O(N) 的時間複雜度，我們應該使用什麼資料結構？",
+        "options": ["Binary Tree", "Stack", "Hash Map (字典)", "Linked List"],
+        "answer": 2,
+        "explanation": "Hash Map 可以在 O(1) 的時間內查找 target - current 的差值是否存在。"
+      },
+      {
+        "id": "1_q3",
+        "question": "在 Hash Map 中，我們通常將什麼存為 Key，什麼存為 Value？",
+        "options": ["Key: 索引，Value: 數字", "Key: 數字，Value: 索引", "兩者都是數字", "兩者都是索引"],
+        "answer": 1,
+        "explanation": "因為我們需要快速檢查「某個差值數字」是否存在，所以數字本身必須是 Key，而找到後需要回傳索引，所以索引存為 Value。"
+      },
+      {
+        "id": "1_q4",
+        "question": "如果使用雙層 for 迴圈暴力解 Two Sum，時間複雜度為何？",
+        "options": ["O(N)", "O(N log N)", "O(N^2)", "O(2^N)"],
+        "answer": 2,
+        "explanation": "外層迴圈 N 次，內層迴圈平均 N/2 次，因此時間複雜度為 O(N^2)。"
+      },
+      {
+        "id": "1_q5",
+        "question": "在 Python 中，取得陣列元素的 Index 和 Value 通常會使用哪個內建函式？",
+        "options": ["range()", "len()", "zip()", "enumerate()"],
+        "answer": 3,
+        "explanation": "enumerate() 可以在迴圈中同時迭代索引 (index) 與數值 (value)，非常方便。"
+      }
+    ]
+  },
+  {
+    "problemId": "49",
+    "questions": [
+      {
+        "id": "49_q1",
+        "question": "Group Anagrams 的目標是什麼？",
+        "options": ["計算有幾個 Anagram", "將屬於同一組 Anagram 的字串分類在一起", "刪除所有 Anagram", "將字串依照字母順序排序輸出"],
+        "answer": 1,
+        "explanation": "題目要求將所有互為 Anagram 的字串群組起來變成一個二維陣列。"
+      },
+      {
+        "id": "49_q2",
+        "question": "在不進行字串排序的情況下，我們可以拿什麼作為 Hash Map 的 Key 來將 Anagram 分群？",
+        "options": ["字串長度", "字串的第一個字母", "包含 26 個字母頻率的 Tuple", "字串的 ASCII 總和"],
+        "answer": 2,
+        "explanation": "字母頻率完全相同的字串就是 Anagram。因為 Python 的 List 不能當 dict 的 Key，所以要轉成 Tuple。"
+      },
+      {
+        "id": "49_q3",
+        "question": "為什麼我們不能用 Python 的 List 當作 dict 的 Key？",
+        "options": ["因為 List 太大", "因為 List 包含字串", "因為 List 是不可變的 (Immutable)", "因為 List 是可變的 (Mutable)，無法被 Hash"],
+        "answer": 3,
+        "explanation": "字典的 Key 必須是 Hashable 的不可變物件（如字串、整數、Tuple），而 List 可以隨時修改，因此不安全。"
+      },
+      {
+        "id": "49_q4",
+        "question": "如果字串平均長度為 K，字串總數為 N，使用字串排序法分群的時間複雜度是多少？",
+        "options": ["O(N * K)", "O(N * K log K)", "O(N^2 * K)", "O(N)"],
+        "answer": 1,
+        "explanation": "每個字串排序需要 K log K，共有 N 個字串，所以是 O(N * K log K)。"
+      },
+      {
+        "id": "49_q5",
+        "question": "使用 `collections.defaultdict(list)` 的好處是什麼？",
+        "options": ["存取不存在的 Key 時會報錯", "存取不存在的 Key 時會自動建立一個空陣列", "可以讓字典自動排序", "節省記憶體空間"],
+        "answer": 1,
+        "explanation": "defaultdict 可以省去檢查 Key 是否存在的步驟，直接對其 append()。"
+      }
+    ]
+  },
+  {
+    "problemId": "347",
+    "questions": [
+      {
+        "id": "347_q1",
+        "question": "Top K Frequent Elements 的核心要求是？",
+        "options": ["找出最大的 K 個元素", "找出出現次數最多的 K 個元素", "去除重複元素", "排序陣列"],
+        "answer": 1,
+        "explanation": "頻率 (Frequent) 代表的是出現次數，而非數字本身的大小。"
+      },
+      {
+        "id": "347_q2",
+        "question": "除了使用排序，哪一種資料結構非常適合用來解決 'Top K' 問題？",
+        "options": ["Stack", "Queue", "Min/Max Heap (Priority Queue)", "Linked List"],
+        "answer": 2,
+        "explanation": "Heap 特別適合動態維護前 K 大/小/頻繁的元素集合。"
+      },
+      {
+        "id": "347_q3",
+        "question": "在 Python 中，哪一個模組提供了 Heap 的實作？",
+        "options": ["heapq", "collections", "math", "queue"],
+        "answer": 0,
+        "explanation": "heapq 提供了 heappush, heappop 等操作，且預設是 Min Heap。"
+      },
+      {
+        "id": "347_q4",
+        "question": "如果不使用 Heap，還有一種被稱為 Bucket Sort (桶排序) 的 O(N) 解法，其桶的索引代表什麼？",
+        "options": ["數字本身", "數字的出現頻率", "數字的位數", "數字在原陣列的位置"],
+        "answer": 1,
+        "explanation": "將頻率作為陣列的 Index（最大頻率不超過陣列長度），再把該頻率對應的數字放入桶中，最後從後往前掃描即可達到 O(N)。"
+      },
+      {
+        "id": "347_q5",
+        "question": "在 Bucket Sort 解法中，為什麼桶的陣列大小設定為 `len(nums) + 1`？",
+        "options": ["為了防呆", "因為最多的出現次數就是整個陣列的長度", "為了預留給數字 0", "為了防止溢位"],
+        "answer": 1,
+        "explanation": "一個數字最多出現 len(nums) 次，因此 Index 需要開到 len(nums)。"
+      }
+    ]
+  },
+  {
+    "problemId": "238",
+    "questions": [
+      {
+        "id": "238_q1",
+        "question": "Product of Array Except Self 這題有一個嚴格的限制是什麼？",
+        "options": ["不能使用額外陣列", "不能使用除法運算", "必須在 O(1) 時間內完成", "必須使用遞迴"],
+        "answer": 1,
+        "explanation": "如果可以用除法，把總乘積除以自身數字就解完了，但題目禁止使用除法 (without using division)。"
+      },
+      {
+        "id": "238_q2",
+        "question": "如果不使用除法，我們應該怎麼計算某個元素「除自己以外的乘積」？",
+        "options": ["把剩下的數字全部加起來", "計算它左邊所有數字的乘積，再乘上它右邊所有數字的乘積", "使用位元運算", "減去自己的值"],
+        "answer": 1,
+        "explanation": "Except Self 的乘積 ＝ (該數字左側的 Prefix Product) × (該數字右側的 Postfix Product)。"
+      },
+      {
+        "id": "238_q3",
+        "question": "在實作空間複雜度 O(1) 的進階解法時，我們如何處理 Prefix 和 Postfix？",
+        "options": ["直接輸出答案，不記錄", "利用要回傳的 output 陣列先儲存 Prefix，再用一個變數累乘 Postfix 掃描一次", "用遞迴儲存在 Call Stack 中", "使用字串來儲存"],
+        "answer": 1,
+        "explanation": "output 陣列不計入額外空間，因此我們可以把 output 當作 Prefix 陣列，再反向遍歷一次乘上 Postfix。"
+      },
+      {
+        "id": "238_q4",
+        "question": "如果陣列中有一個 0，除了該 0 所在的位置以外，其他位置的答案會是多少？",
+        "options": ["都是 1", "都是 0", "會有無限大", "負數"],
+        "answer": 1,
+        "explanation": "因為其他位置在計算乘積時都會乘到這個 0，所以結果一定全是 0。"
+      },
+      {
+        "id": "238_q5",
+        "question": "如果陣列中有兩個或以上的 0，整個輸出陣列會是什麼樣子？",
+        "options": ["全都是 0", "全都是 1", "隨機數字", "報錯"],
+        "answer": 0,
+        "explanation": "只要有兩個以上的 0，任何一個位置都至少會包含另一個 0 作為乘數，因此全部皆為 0。"
+      }
+    ]
+  },
+  {
+    "problemId": "36",
+    "questions": [
+      {
+        "id": "36_q1",
+        "question": "Valid Sudoku 要求我們檢查數獨盤面的哪三個部分是否有重複數字？",
+        "options": ["行、對角線、3x3 宮格", "列、對角線、3x3 宮格", "行 (Row)、列 (Col)、3x3 宮格 (Square)", "中心點、四個角、對角線"],
+        "answer": 2,
+        "explanation": "標準數獨規則要求每一橫列、每一直行、每個粗線 3x3 九宮格內都不能有重複數字。"
+      },
+      {
+        "id": "36_q2",
+        "question": "我們通常使用什麼資料結構來記錄某個區塊已經出現過的數字？",
+        "options": ["Queue", "Hash Set", "Stack", "Binary Tree"],
+        "answer": 1,
+        "explanation": "Set 可以在 O(1) 判斷元素是否重複，非常適合用來記錄已出現的數字。"
+      },
+      {
+        "id": "36_q3",
+        "question": "在 9x9 的棋盤中，已知座標為 `(r, c)`，如何用數學式快速算出它屬於哪一個 3x3 九宮格？",
+        "options": ["(r % 3, c % 3)", "(r // 3, c // 3)", "(r + 3, c + 3)", "(r * 3, c * 3)"],
+        "answer": 1,
+        "explanation": "使用整數除法 `//`，可以將 0~8 映射到 0~2，產生 9 個唯一的宮格座標 (0,0) 到 (2,2)。"
+      },
+      {
+        "id": "36_q4",
+        "question": "遇到數獨盤面上的空白格 `.` 時，我們應該怎麼做？",
+        "options": ["填入數字 1", "直接回傳 False", "跳過不處理 (continue)", "填入數字 0"],
+        "answer": 2,
+        "explanation": "空白格不需要檢查是否重複，因此直接跳過進入下一個迴圈即可。"
+      },
+      {
+        "id": "36_q5",
+        "question": "這題的時間複雜度是多少？",
+        "options": ["O(N)", "O(1)", "O(N^2)", "O(9^2) = O(1)"],
+        "answer": 3,
+        "explanation": "因為數獨盤面固定是 9x9 (81 格)，所以時間與空間複雜度在技術上都是常數級別 O(1)。"
+      }
+    ]
+  },
+  {
+    "problemId": "271",
+    "questions": [
+      {
+        "id": "271_q1",
+        "question": "Encode and Decode Strings 題目的目標是什麼？",
+        "options": ["將字串加密成二進位", "將字串陣列編碼為單一字串，並能無損還原", "壓縮字串以減少記憶體", "將字串轉為 Hash"],
+        "answer": 1,
+        "explanation": "目標是設計一個演算法，讓 List of Strings 轉成一個大 String 進行傳輸，然後可以完美解碼還原。"
+      },
+      {
+        "id": "271_q2",
+        "question": "如果我們只用特殊符號 (如 `#`) 來連接字串，會遇到什麼問題？",
+        "options": ["會導致字串變太長", "字串本身可能就包含 `#` 符號，導致解碼時切割錯誤", "Python 不支援 # 符號", "# 是註解符號會報錯"],
+        "answer": 1,
+        "explanation": "單純使用分隔符號是不安全的，因為如果原始字串內容包含該符號，解碼時就會被誤切斷。"
+      },
+      {
+        "id": "271_q3",
+        "question": "一種最經典且安全的編碼策略是 Chunked Transfer Encoding。具體是怎麼做？",
+        "options": ["反轉每個字串", "將字串轉為 ASCII 數字陣列", "在每個字串前面加上「該字串的長度」和「一個分隔符號」", "在字串尾部加上特定的檢查碼"],
+        "answer": 2,
+        "explanation": "例如 `\"neet\"` -> `\"4#neet\"`。解碼時先讀取數字 4，就知道後面嚴格的 4 個字元是字串內容，完美避開符號衝突。"
+      },
+      {
+        "id": "271_q4",
+        "question": "如果編碼格式為 `長度#內容`，在解碼讀取數字長度時，為什麼不只讀取 1 個字元？",
+        "options": ["因為字串長度可能大於 9，會佔用多個字元", "因為要避開空白", "因為安全考量", "因為 Python 限制"],
+        "answer": 0,
+        "explanation": "字串可能有數十、數百字元長 (例如 `100#...`)，所以必須用 while 迴圈一路讀取到 `#` 符號為止才能得到完整的長度數字。"
+      },
+      {
+        "id": "271_q5",
+        "question": "此 Chunked Encoding 解法的時間複雜度為何？",
+        "options": ["O(1)", "O(log N)", "O(N)", "O(N^2)"],
+        "answer": 2,
+        "explanation": "編碼與解碼都需要掃描所有字元一次，N 為總字元長度，所以是 O(N)。"
+      }
+    ]
+  },
+  {
+    "problemId": "128",
+    "questions": [
+      {
+        "id": "128_q1",
+        "question": "Longest Consecutive Sequence 要求在 O(N) 的時間內找出最長連續序列的長度。如果先使用排序，會違反什麼條件？",
+        "options": ["空間複雜度會超過", "時間複雜度會變成 O(N log N)", "寫法太複雜", "無法處理負數"],
+        "answer": 1,
+        "explanation": "排序的時間複雜度是 O(N log N)，題目嚴格要求必須在 O(N) 內完成。"
+      },
+      {
+        "id": "128_q2",
+        "question": "為了達到 O(N) 的時間複雜度查找數字是否存在，必須先將所有數字轉成什麼資料結構？",
+        "options": ["Linked List", "Stack", "Queue", "Hash Set"],
+        "answer": 3,
+        "explanation": "將所有數字存入 Set 後，檢查某數字是否存在只需 O(1) 的時間。"
+      },
+      {
+        "id": "128_q3",
+        "question": "在尋找連續序列時，我們怎麼判斷一個數字是「某個序列的起點」？",
+        "options": ["它是偶數", "它是正數", "它在原陣列的 Index 是 0", "`num - 1` 不存在於 Set 當中"],
+        "answer": 3,
+        "explanation": "如果 `num - 1` 不存在，代表 `num` 沒有比它小 1 的前驅數字，因此它必定是一段連續序列的「開頭」。"
+      },
+      {
+        "id": "128_q4",
+        "question": "確認數字是序列起點後，我們接下來要做什麼？",
+        "options": ["開始往後尋找 `num + 1`, `num + 2`... 是否在 Set 裡，並計算長度", "尋找 `num - 2`", "直接回傳該數字", "把起點從 Set 中刪除"],
+        "answer": 0,
+        "explanation": "從起點開始，用 while 迴圈不斷確認下一個數字是否存在，就能算出這段連續序列的長度。"
+      },
+      {
+        "id": "128_q5",
+        "question": "雖然有 while 迴圈嵌套在 for 迴圈中，為什麼整體時間複雜度仍然是 O(N)？",
+        "options": ["因為 Python 執行很快", "因為 while 迴圈只會從「序列的起點」觸發，每個數字最多只會被訪問兩次", "因為 N 不會太大", "時間複雜度其實是 O(N^2)"],
+        "answer": 1,
+        "explanation": "因為加上了 `if num - 1 not in set:` 的判斷，非起點的數字會直接被跳過，每個數字被查詢的總次數是線性的 O(N)。"
+      }
+    ]
+  }
+]

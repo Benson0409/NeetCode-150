@@ -1,0 +1,725 @@
+[
+  {
+    "id": "1",
+    "title": "1. Two Sum",
+    "difficulty": "Easy",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
+    "examples": "Example 1:\n```\nInput: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: Because nums[0] + nums[1] == 9, we return [0, 1].\n```\nExample 2:\n```\nInput: nums = [3,2,4], target = 6\nOutput: [1,2]\n```\nExample 3:\n```\nInput: nums = [3,3], target = 6\nOutput: [0,1]\n ```",
+    "constraints": "Constraints:\n\n- 2 <= nums.length <= 104\n- -109 <= nums[i] <= 109\n- -109 <= target <= 109\n- Only one valid answer exists.\n\nFollow-up: Can you come up with an algorithm that is less than O(n2) time complexity?",
+    "concept": "用一個字典（`dict`）記錄「已遍歷的數字 → 其索引」。\n\n對每個 `nums[i]`，計算 `remaining = target - nums[i]`：\n- 若 `remaining` 已在字典中 → 找到答案，回傳兩個索引\n- 否則將 `nums[i]` 及其索引存入字典\n\n這樣只需一次遍歷，時間複雜度 O(n)，空間複雜度 O(n)。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "1_0",
+          "code": "prevMap = {}  # val : index",
+          "originalIndent": 0
+        },
+        {
+          "id": "1_1",
+          "code": "for i, n in enumerate(nums):",
+          "originalIndent": 0
+        },
+        {
+          "id": "1_2",
+          "code": "diff = target - n",
+          "originalIndent": 1
+        },
+        {
+          "id": "1_3",
+          "code": "if diff in prevMap:",
+          "originalIndent": 1
+        },
+        {
+          "id": "1_4",
+          "code": "return [prevMap[diff], i]",
+          "originalIndent": 2
+        },
+        {
+          "id": "1_5",
+          "code": "prevMap[n] = i",
+          "originalIndent": 1
+        }
+      ],
+      "correctOrderIds": [
+        "1_0",
+        "1_1",
+        "1_2",
+        "1_3",
+        "1_4",
+        "1_5"
+      ]
+    }
+  },
+  {
+    "id": "08",
+    "title": "659 · Encode and Decode Strings",
+    "difficulty": "Unknown",
+    "description": "",
+    "examples": "",
+    "constraints": "",
+    "concept": "關鍵問題：如何避免分隔符號與字串內容衝突？\n\n使用「長度前綴法（length-prefix encoding）」：\n\n- **Encode**：對每個字串，先寫入其長度，再加上一個分隔符（如 `#`），最後接字串本身。例如 `\"hello\"` → `\"5#hello\"`。\n- **Decode**：讀取長度數字直到分隔符，然後取出對應長度的子字串，不需擔心字串內容包含任何特殊符號。\n\n這樣任意字串（包含特殊符號）都能正確編解碼。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "08_0",
+          "code": "\"\"\"",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_1",
+          "code": "@param: strs: a list of strings",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_2",
+          "code": "@return: encodes a list of strings to a single string.",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_3",
+          "code": "\"\"\"",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_4",
+          "code": "res = \"\"",
+          "originalIndent": 1
+        },
+        {
+          "id": "08_5",
+          "code": "for s in strs:",
+          "originalIndent": 1
+        },
+        {
+          "id": "08_6",
+          "code": "res += str(len(s)) + \"#\" + s",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_7",
+          "code": "return res",
+          "originalIndent": 1
+        },
+        {
+          "id": "08_8",
+          "code": "\"\"\"",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_9",
+          "code": "@param: str: A string",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_10",
+          "code": "@return: dcodes a single string to a list of strings",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_11",
+          "code": "\"\"\"",
+          "originalIndent": 0
+        },
+        {
+          "id": "08_12",
+          "code": "res, i = [], 0",
+          "originalIndent": 1
+        },
+        {
+          "id": "08_13",
+          "code": "while i < len(str):",
+          "originalIndent": 1
+        },
+        {
+          "id": "08_14",
+          "code": "j = i",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_15",
+          "code": "while str[j] != \"#\":",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_16",
+          "code": "j += 1",
+          "originalIndent": 3
+        },
+        {
+          "id": "08_17",
+          "code": "length = int(str[i:j])",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_18",
+          "code": "res.append(str[j + 1 : j + 1 + length])",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_19",
+          "code": "i = j + 1 + length",
+          "originalIndent": 2
+        },
+        {
+          "id": "08_20",
+          "code": "return res",
+          "originalIndent": 1
+        }
+      ],
+      "correctOrderIds": [
+        "08_0",
+        "08_1",
+        "08_2",
+        "08_3",
+        "08_4",
+        "08_5",
+        "08_6",
+        "08_7",
+        "08_8",
+        "08_9",
+        "08_10",
+        "08_11",
+        "08_12",
+        "08_13",
+        "08_14",
+        "08_15",
+        "08_16",
+        "08_17",
+        "08_18",
+        "08_19",
+        "08_20"
+      ]
+    }
+  },
+  {
+    "id": "36",
+    "title": "36. Valid Sudoku",
+    "difficulty": "Medium",
+    "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\n\n- Each row must contain the digits 1-9 without repetition.\n- Each column must contain the digits 1-9 without repetition.\n- Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\n\nNote:\n- A Sudoku board (partially filled) could be valid but is not necessarily solvable.\n- Only the filled cells need to be validated according to the mentioned rules.",
+    "examples": "Example 1:\n\n```\nInput: board = \n[[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\"4\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: true\n```\nExample 2:\n```\nInput: board = \n[[\"8\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\"4\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: false\n```\nExplanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.",
+    "constraints": "Constraints:\n\n- board.length == 9\n- board[i].length == 9\n- board[i][j] is a digit 1-9 or '.'.",
+    "concept": "**方法：使用 Set 一次掃描**\n\n用一個集合（`set`）記錄所有已見過的「數字 + 位置」資訊（如 `(row, num)`、`(col, num)`、`(square, num)`）。若數字已存在於對應的行列或小方塊中，則代表重複，直接回傳 `False`。\n\n時間複雜度：O(81) = O(1)，空間複雜度：O(81) = O(1)。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "36_0",
+          "code": "cols = collections.defaultdict(set)",
+          "originalIndent": 0
+        },
+        {
+          "id": "36_1",
+          "code": "rows = collections.defaultdict(set)",
+          "originalIndent": 0
+        },
+        {
+          "id": "36_2",
+          "code": "squares = collections.defaultdict(set)  # key = (r // 3, c // 3)",
+          "originalIndent": 0
+        },
+        {
+          "id": "36_3",
+          "code": "for r in range(9):",
+          "originalIndent": 0
+        },
+        {
+          "id": "36_4",
+          "code": "for c in range(9):",
+          "originalIndent": 1
+        },
+        {
+          "id": "36_5",
+          "code": "if board[r][c] == \".\":",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_6",
+          "code": "continue",
+          "originalIndent": 3
+        },
+        {
+          "id": "36_7",
+          "code": "if (",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_8",
+          "code": "board[r][c] in rows[r]",
+          "originalIndent": 3
+        },
+        {
+          "id": "36_9",
+          "code": "or board[r][c] in cols[c]",
+          "originalIndent": 3
+        },
+        {
+          "id": "36_10",
+          "code": "or board[r][c] in squares[(r // 3, c // 3)]",
+          "originalIndent": 3
+        },
+        {
+          "id": "36_11",
+          "code": "):",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_12",
+          "code": "return False",
+          "originalIndent": 3
+        },
+        {
+          "id": "36_13",
+          "code": "cols[c].add(board[r][c])",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_14",
+          "code": "rows[r].add(board[r][c])",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_15",
+          "code": "squares[(r // 3, c // 3)].add(board[r][c])",
+          "originalIndent": 2
+        },
+        {
+          "id": "36_16",
+          "code": "return True",
+          "originalIndent": 0
+        }
+      ],
+      "correctOrderIds": [
+        "36_0",
+        "36_1",
+        "36_2",
+        "36_3",
+        "36_4",
+        "36_5",
+        "36_6",
+        "36_7",
+        "36_8",
+        "36_9",
+        "36_10",
+        "36_11",
+        "36_12",
+        "36_13",
+        "36_14",
+        "36_15",
+        "36_16"
+      ]
+    }
+  },
+  {
+    "id": "49",
+    "title": "49. Group Anagrams",
+    "difficulty": "Medium",
+    "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\nAn Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.",
+    "examples": "Example 1:\n```\nInput: strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\nOutput: [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n```\nExample 2:\n```\nInput: strs = [\"\"]\nOutput: [[\"\"]]\n```\nExample 3:\n```\nInput: strs = [\"a\"]\nOutput: [[\"a\"]]\n ```",
+    "constraints": "Constraints:\n\n- 1 <= strs.length <= 104\n- 0 <= strs[i].length <= 100\n- strs[i] consists of lowercase English letters.",
+    "concept": "**方法一：排序作為 key**\n\n將每個字串排序後得到的字串當作 key，相同 key 的字串即為同一組 Anagram。\n時間複雜度：O(n · k log k)，k 為最長字串長度。\n\n**方法二：字母計數作為 key**\n\n用一個大小為 26 的字母計數元組（tuple）作為 key，不需排序。\n時間複雜度：O(n · k)，更快。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "49_0",
+          "code": "# 方法一：排序",
+          "originalIndent": 0
+        },
+        {
+          "id": "49_1",
+          "code": "res = defaultdict(list)",
+          "originalIndent": 1
+        },
+        {
+          "id": "49_2",
+          "code": "for s in strs:",
+          "originalIndent": 1
+        },
+        {
+          "id": "49_3",
+          "code": "sorted_s = \"\".join(sorted(s))",
+          "originalIndent": 2
+        },
+        {
+          "id": "49_4",
+          "code": "res[sorted_s].append(s)",
+          "originalIndent": 2
+        },
+        {
+          "id": "49_5",
+          "code": "return list(res.values())",
+          "originalIndent": 1
+        }
+      ],
+      "correctOrderIds": [
+        "49_0",
+        "49_1",
+        "49_2",
+        "49_3",
+        "49_4",
+        "49_5"
+      ]
+    }
+  },
+  {
+    "id": "128",
+    "title": "128. Longest Consecutive Sequence",
+    "difficulty": "Medium",
+    "description": "Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.\n\nYou must write an algorithm that runs in O(n) time.",
+    "examples": "Example 1:\n```\nInput: nums = [100,4,200,1,3,2]\nOutput: 4\nExplanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.\n```\nExample 2:\n```\nInput: nums = [0,3,7,2,5,8,4,6,0,1]\nOutput: 9\n ```",
+    "constraints": "Constraints:\n\n- 0 <= nums.length <= 10<sup>5</sup>\n- -10<sup>9</sup> <= nums[i] <= 10<sup>9</sup>",
+    "concept": "將所有數字放入集合（`set`）（O(1) 查詢）。\n\n遍歷每個數字 `n`，只有當 `n - 1` **不在** set 中時，才以 `n` 作為連續序列的起點開始往上計數（避免重複計算）。\n\n從起點持續累加直到下一個數字不在 set 中，記錄最大長度。\n\n整體時間複雜度：O(n)（每個元素最多被查詢幾次，且每個序列只會被遍歷一次）。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "128_0",
+          "code": "numSet = set(nums)",
+          "originalIndent": 0
+        },
+        {
+          "id": "128_1",
+          "code": "longest = 0",
+          "originalIndent": 0
+        },
+        {
+          "id": "128_2",
+          "code": "for n in nums:",
+          "originalIndent": 0
+        },
+        {
+          "id": "128_3",
+          "code": "# check if its the start of a sequence",
+          "originalIndent": 1
+        },
+        {
+          "id": "128_4",
+          "code": "if (n - 1) not in numSet:",
+          "originalIndent": 1
+        },
+        {
+          "id": "128_5",
+          "code": "length = 0",
+          "originalIndent": 2
+        },
+        {
+          "id": "128_6",
+          "code": "while (n + length) in numSet:",
+          "originalIndent": 2
+        },
+        {
+          "id": "128_7",
+          "code": "length += 1",
+          "originalIndent": 3
+        },
+        {
+          "id": "128_8",
+          "code": "longest = max(length, longest)",
+          "originalIndent": 2
+        },
+        {
+          "id": "128_9",
+          "code": "return longest",
+          "originalIndent": 0
+        }
+      ],
+      "correctOrderIds": [
+        "128_0",
+        "128_1",
+        "128_2",
+        "128_3",
+        "128_4",
+        "128_5",
+        "128_6",
+        "128_7",
+        "128_8",
+        "128_9"
+      ]
+    }
+  },
+  {
+    "id": "217",
+    "title": "217. Contains Duplicate",
+    "difficulty": "Easy",
+    "description": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
+    "examples": "Example 1:\n```\nInput: nums = [1,2,3,1]\nOutput: true\n```\nExample 2:\n```\nInput: nums = [1,2,3,4]\nOutput: false\n```\nExample 3:\n```\nInput: nums = [1,1,1,3,3,4,3,2,4,2]\nOutput: true\n ```",
+    "constraints": "Constraints:\n\n- 1 <= nums.length <= 105\n- -109 <= nums[i] <= 109",
+    "concept": "用一個集合（`set`）記錄已經遍歷過的數字。每次遇到新數字時，先檢查是否已存在 set 中：\n- 若存在 → 代表有重複，直接回傳 `True`\n- 若不存在 → 加入 set，繼續遍歷\n\n時間複雜度：O(n)，空間複雜度：O(n)。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "217_0",
+          "code": "seen = set()",
+          "originalIndent": 0
+        },
+        {
+          "id": "217_1",
+          "code": "for num in nums:",
+          "originalIndent": 0
+        },
+        {
+          "id": "217_2",
+          "code": "if num in seen:",
+          "originalIndent": 1
+        },
+        {
+          "id": "217_3",
+          "code": "return True",
+          "originalIndent": 2
+        },
+        {
+          "id": "217_4",
+          "code": "seen.add(num)",
+          "originalIndent": 1
+        },
+        {
+          "id": "217_5",
+          "code": "return False",
+          "originalIndent": 0
+        }
+      ],
+      "correctOrderIds": [
+        "217_0",
+        "217_1",
+        "217_2",
+        "217_3",
+        "217_4",
+        "217_5"
+      ]
+    }
+  },
+  {
+    "id": "238",
+    "title": "238. Product of Array Except Self",
+    "difficulty": "Medium",
+    "description": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
+    "examples": "Example 1:\n```\nInput: nums = [1,2,3,4]\nOutput: [24,12,8,6]\n```\nExample 2:\n```\nInput: nums = [-1,1,0,-3,3]\nOutput: [0,0,9,0,0]\n ```",
+    "constraints": "Constraints:\n\n- 2 <= nums.length <= 105\n- -30 <= nums[i] <= 30\n- The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\n### Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)",
+    "concept": "使用前綴積（prefix product）與後綴積（suffix product）兩次遍歷，避免使用除法：\n\n1. **第一次遍歷（從左到右）**：`res[i]` 先存 `i` 左邊所有元素的乘積（`res[0] = 1`）。\n2. **第二次遍歷（從右到左）**：用變數 `postfix` 累積右邊的乘積，再乘進 `res[i]`。\n\n這樣 `res[i]` 最終等於左側乘積 × 右側乘積，即除了自身以外所有元素的乘積。\n\n時間複雜度：O(n)，空間複雜度：O(1)（輸出陣列不計入）。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "238_0",
+          "code": "res = [1] * (len(nums))",
+          "originalIndent": 0
+        },
+        {
+          "id": "238_1",
+          "code": "prefix = 1",
+          "originalIndent": 0
+        },
+        {
+          "id": "238_2",
+          "code": "for i in range(len(nums)):",
+          "originalIndent": 0
+        },
+        {
+          "id": "238_3",
+          "code": "res[i] = prefix",
+          "originalIndent": 1
+        },
+        {
+          "id": "238_4",
+          "code": "prefix *= nums[i]",
+          "originalIndent": 1
+        },
+        {
+          "id": "238_5",
+          "code": "postfix = 1",
+          "originalIndent": 0
+        },
+        {
+          "id": "238_6",
+          "code": "for i in range(len(nums) - 1, -1, -1):",
+          "originalIndent": 0
+        },
+        {
+          "id": "238_7",
+          "code": "res[i] *= postfix",
+          "originalIndent": 1
+        },
+        {
+          "id": "238_8",
+          "code": "postfix *= nums[i]",
+          "originalIndent": 1
+        },
+        {
+          "id": "238_9",
+          "code": "return res",
+          "originalIndent": 0
+        }
+      ],
+      "correctOrderIds": [
+        "238_0",
+        "238_1",
+        "238_2",
+        "238_3",
+        "238_4",
+        "238_5",
+        "238_6",
+        "238_7",
+        "238_8",
+        "238_9"
+      ]
+    }
+  },
+  {
+    "id": "242",
+    "title": "242. Valid Anagram",
+    "difficulty": "Easy",
+    "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.\n\nAn Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.",
+    "examples": "Example 1:\n```\nInput: s = \"anagram\", t = \"nagaram\"\nOutput: true\n```\nExample 2:\n```\nInput: s = \"rat\", t = \"car\"\nOutput: false\n ```",
+    "constraints": "Constraints:\n\n- 1 <= s.length, t.length <= 5 * 104\n- s and t consist of lowercase English letters.",
+    "concept": "若兩個字串長度不同，直接回傳 `False`。\n\n用一個大小為 26 的整數陣列 `chars` 記錄字母出現次數：\n- 遍歷 s 時對對應位置 `+1`\n- 遍歷 t 時對對應位置 `-1`\n\n最後檢查 `chars` 是否全為 0，若是則代表兩字串是 Anagram。\n\n時間複雜度：O(n)，空間複雜度：O(1)（固定 26 格）。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "242_0",
+          "code": "if len(s) != len(t):",
+          "originalIndent": 0
+        },
+        {
+          "id": "242_1",
+          "code": "return False",
+          "originalIndent": 1
+        },
+        {
+          "id": "242_2",
+          "code": "chars = [0] * 26",
+          "originalIndent": 0
+        },
+        {
+          "id": "242_3",
+          "code": "for i in range(len(s)):",
+          "originalIndent": 0
+        },
+        {
+          "id": "242_4",
+          "code": "chars[ord(s[i]) - ord('a')] += 1",
+          "originalIndent": 1
+        },
+        {
+          "id": "242_5",
+          "code": "chars[ord(t[i]) - ord('a')] -= 1",
+          "originalIndent": 1
+        },
+        {
+          "id": "242_6",
+          "code": "for n in chars:",
+          "originalIndent": 0
+        },
+        {
+          "id": "242_7",
+          "code": "if n != 0:",
+          "originalIndent": 1
+        },
+        {
+          "id": "242_8",
+          "code": "return False",
+          "originalIndent": 2
+        },
+        {
+          "id": "242_9",
+          "code": "return True",
+          "originalIndent": 0
+        }
+      ],
+      "correctOrderIds": [
+        "242_0",
+        "242_1",
+        "242_2",
+        "242_3",
+        "242_4",
+        "242_5",
+        "242_6",
+        "242_7",
+        "242_8",
+        "242_9"
+      ]
+    }
+  },
+  {
+    "id": "347",
+    "title": "347. Top K Frequent Elements",
+    "difficulty": "Medium",
+    "description": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+    "examples": "Example 1:\n```\nInput: nums = [1,1,1,2,2,3], k = 2\nOutput: [1,2]\n```\nExample 2:\n```\nInput: nums = [1], k = 1\nOutput: [1]\n ```",
+    "constraints": "Constraints:\n\n- 1 <= nums.length <= 105\n- k is in the range [1, the number of unique elements in the array].\n- It is guaranteed that the answer is unique.\n\n### Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.",
+    "concept": "1. 用字典（`dict`）統計每個數字出現的頻率。\n2. 方法一：用 Heap（`heapq`）依頻率排序，取出頻率最高的前 k 個元素。\n3. 方法二：Bucket Sort（桶排序），時間複雜度 O(n)。\n\n時間複雜度：O(n)。",
+    "puzzle": {
+      "blocks": [
+        {
+          "id": "347_0",
+          "code": "count = {}",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_1",
+          "code": "freq = [[] for i in range(len(nums) + 1)]",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_2",
+          "code": "for n in nums:",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_3",
+          "code": "count[n] = 1 + count.get(n, 0)",
+          "originalIndent": 1
+        },
+        {
+          "id": "347_4",
+          "code": "for n, c in count.items():",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_5",
+          "code": "freq[c].append(n)",
+          "originalIndent": 1
+        },
+        {
+          "id": "347_6",
+          "code": "res = []",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_7",
+          "code": "for i in range(len(freq) - 1, 0, -1):",
+          "originalIndent": 0
+        },
+        {
+          "id": "347_8",
+          "code": "for n in freq[i]:",
+          "originalIndent": 1
+        },
+        {
+          "id": "347_9",
+          "code": "res.append(n)",
+          "originalIndent": 2
+        },
+        {
+          "id": "347_10",
+          "code": "if len(res) == k:",
+          "originalIndent": 2
+        },
+        {
+          "id": "347_11",
+          "code": "return res",
+          "originalIndent": 3
+        }
+      ],
+      "correctOrderIds": [
+        "347_0",
+        "347_1",
+        "347_2",
+        "347_3",
+        "347_4",
+        "347_5",
+        "347_6",
+        "347_7",
+        "347_8",
+        "347_9",
+        "347_10",
+        "347_11"
+      ]
+    }
+  }
+]

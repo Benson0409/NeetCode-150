@@ -16,6 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical } from 'lucide-react';
+import type { PuzzleBlock } from '../types';
 
 interface SortableItemProps {
   id: string;
@@ -63,8 +64,8 @@ function SortableItem({ id, code, indentLevel }: SortableItemProps) {
 }
 
 interface CodePuzzleProps {
-  blocks: { id: string; code: string }[];
-  onOrderChange: (newBlocks: { id: string; code: string }[]) => void;
+  blocks: PuzzleBlock[];
+  onOrderChange: (newBlocks: PuzzleBlock[]) => void;
 }
 
 export function CodePuzzle({ blocks, onOrderChange }: CodePuzzleProps) {
@@ -85,30 +86,11 @@ export function CodePuzzle({ blocks, onOrderChange }: CodePuzzleProps) {
     }
   };
 
-  // 動態計算縮排邏輯 (基於當前順序)
-  let currentIndent = 0;
-  const blocksWithIndent = blocks.map((block) => {
-    let indent = currentIndent;
-    
-    // 特殊的反縮排規則 (針對此題)
-    if (block.code === 'return False') {
-      indent = 0;
-      currentIndent = 0;
-    } else if (block.code === 'seen.add(num)') {
-      // 在 for 迴圈內的平行邏輯，通常是縮排 1
-      indent = 1;
-      currentIndent = 1;
-    }
-    
-    const finalIndent = indent;
-    
-    // 如果這行結尾是冒號，下一行要縮排
-    if (block.code.endsWith(':')) {
-      currentIndent = indent + 1;
-    }
-    
-    return { ...block, indentLevel: finalIndent };
-  });
+  // 根據打散的陣列直接使用原始縮排
+  const blocksWithIndent = blocks.map((block) => ({
+    ...block,
+    indentLevel: (block as any).originalIndent || 0,
+  }));
 
   return (
     <div className="w-full bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
