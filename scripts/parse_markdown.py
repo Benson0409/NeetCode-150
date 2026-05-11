@@ -13,33 +13,46 @@ def parse_markdown(filepath):
 
     # Extract Title and ID
     title_match = re.search(r'^#\s*(.*?)$', content, re.MULTILINE)
-    title = title_match.group(1) if title_match else filename
-    problem_id = title.split('.')[0].strip() if '.' in title else filename.split('.')[0]
+    full_title = title_match.group(1) if title_match else filename
+    
+    # Try to extract numerical ID from title (e.g. "217. Title" or "659 · Title" or "1 Two Sum")
+    id_match = re.search(r'^(\d+)', full_title)
+    problem_id = id_match.group(1) if id_match else filename.split('.')[0]
+    title = full_title
 
-    # Extract Difficulty
-    difficulty_match = re.search(r'^#.*?\n(Easy|Medium|Hard)', content, re.MULTILINE)
-    difficulty = difficulty_match.group(1) if difficulty_match else "Unknown"
+    # Extract Difficulty (Easy|Medium|Hard) anywhere before the concept section
+    difficulty_match = re.search(r'\n(Easy|Medium|Hard)\s*\n', content, re.IGNORECASE)
+    difficulty = difficulty_match.group(1).capitalize() if difficulty_match else "Unknown"
 
-    # Extract the full raw description block first
-    desc_match = re.search(r'(Easy|Medium|Hard)(.*?)(?=## 解題思路)', content, re.DOTALL)
-    raw_desc = desc_match.group(2).strip() if desc_match else ""
+    # Extract the full raw description block (everything between Title and ## 解題思路)
+    # Use re.escape on the title to avoid regex issues
+    start_pos = title_match.end() if title_match else 0
+    concept_pos = content.find('## 解題思路')
+    if concept_pos == -1: concept_pos = len(content)
+    
+    raw_desc = content[start_pos:concept_pos].strip()
+    
+    # Remove the difficulty from raw_desc if it was found
+    if difficulty_match:
+        raw_desc = raw_desc.replace(difficulty_match.group(0).strip(), "").strip()
 
     # Split raw description into description, examples, and constraints
-    # Usually the format is: <text> ... Example 1: ... Constraints: ...
-    # We will use regex to find these markers
-    
-    examples_match = re.search(r'(Example 1:.*?)(?=Constraints:|$)', raw_desc, re.DOTALL)
+    # Match various Example formats: "Example 1:", "Example1", "Example 1"
+    examples_match = re.search(r'(Example\s*\d+:?.*?)(?=Constraints:|$)', raw_desc, re.DOTALL | re.IGNORECASE)
     examples = examples_match.group(1).strip() if examples_match else ""
     
-    constraints_match = re.search(r'(Constraints:.*)', raw_desc, re.DOTALL)
+    constraints_match = re.search(r'(Constraints:.*)', raw_desc, re.DOTALL | re.IGNORECASE)
     constraints = constraints_match.group(1).strip() if constraints_match else ""
     
-    # Description is everything before Example 1 (or Constraints if no example)
+    # Description is everything before Example (or Constraints if no example)
     english_desc = raw_desc
     if examples_match:
         english_desc = raw_desc[:examples_match.start()].strip()
     elif constraints_match:
         english_desc = raw_desc[:constraints_match.start()].strip()
+    
+    # Clean up "Description" header if present at the start
+    english_desc = re.sub(r'^Description\s*\n', '', english_desc, flags=re.IGNORECASE).strip()
 
     # Extract Concept
     concept_match = re.search(r'## 解題思路(.*?)(?=```python)', content, re.DOTALL)
@@ -98,7 +111,7 @@ def main():
     directory = '/Users/benson0409/NeetCode-150/01. Arrays & Hashing'
     output_dir = '/Users/benson0409/NeetCode-150/algo-lingo-proto/src/data'
     
-    md_files = glob.glob(os.path.join(directory, '*.md'))
+    md_files = sorted(glob.glob(os.path.join(directory, '*.md')))
     problems = []
 
     for filepath in md_files:
@@ -106,8 +119,7 @@ def main():
         if parsed and len(parsed["puzzle"]["blocks"]) > 0:
             problems.append(parsed)
 
-    # Sort problems by ID
-    problems.sort(key=lambda x: int(x["id"]) if x["id"].isdigit() else 999)
+    # Problems are already added in sorted order of filenames
 
     with open(os.path.join(output_dir, 'chapter1.json'), 'w', encoding='utf-8') as f:
         json.dump(problems, f, ensure_ascii=False, indent=2)

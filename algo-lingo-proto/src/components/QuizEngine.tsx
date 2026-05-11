@@ -31,6 +31,22 @@ export function QuizEngine({ questions, onComplete }: QuizEngineProps) {
   const currentQ = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
 
+  // Helper to render text with code blocks
+  const renderFormattedText = (text: string) => {
+    if (!text) return null;
+    const parts = text.split(/(`[^`]+`)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return (
+          <code key={i} className="bg-slate-100 text-rose-500 px-1.5 py-0.5 rounded font-mono text-sm border border-slate-200">
+            {part.slice(1, -1)}
+          </code>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    });
+  };
+
   const handleSelect = (index: number) => {
     if (isAnswered) return;
     setSelectedOption(index);
@@ -68,9 +84,26 @@ export function QuizEngine({ questions, onComplete }: QuizEngineProps) {
         </span>
       </div>
 
+      <div className="flex gap-2 mb-4">
+        {currentQ.difficulty && (
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+            currentQ.difficulty === 'Easy' ? 'text-emerald-500 border-emerald-200 bg-emerald-50' :
+            currentQ.difficulty === 'Medium' ? 'text-amber-500 border-amber-200 bg-amber-50' :
+            'text-rose-500 border-rose-200 bg-rose-50'
+          }`}>
+            {currentQ.difficulty}
+          </span>
+        )}
+        {currentQ.testPoint && (
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-200 bg-slate-50 text-slate-500">
+            {currentQ.testPoint}
+          </span>
+        )}
+      </div>
+
       <div className="mb-6">
         <p className="text-lg font-medium text-slate-800 leading-relaxed">
-          {currentQ.question}
+          {renderFormattedText(currentQ.question)}
         </p>
       </div>
 
@@ -96,7 +129,7 @@ export function QuizEngine({ questions, onComplete }: QuizEngineProps) {
               className={`p-4 rounded-xl border-2 text-left transition-all ${stateStyle}`}
             >
               <div className="flex items-center justify-between">
-                <span>{opt}</span>
+                <span>{renderFormattedText(opt)}</span>
                 {isAnswered && idx === currentQ.answer && <CheckCircle2 className="text-emerald-500" size={20} />}
                 {isAnswered && idx === selectedOption && idx !== currentQ.answer && <XCircle className="text-rose-500" size={20} />}
               </div>
@@ -106,11 +139,17 @@ export function QuizEngine({ questions, onComplete }: QuizEngineProps) {
       </div>
 
       {showExplanation && (
-        <div className={`mt-6 p-4 rounded-xl border ${selectedOption === currentQ.answer ? 'bg-emerald-50 border-emerald-100' : 'bg-rose-50 border-rose-100'} animate-in fade-in slide-in-from-bottom-2`}>
-          <p className="text-sm font-medium mb-1 text-slate-700">
-            {selectedOption === currentQ.answer ? '🎉 答對了！' : '😅 答錯了，再想想！'}
+        <div className={`mt-6 p-5 rounded-2xl border-2 ${selectedOption === currentQ.answer ? 'bg-emerald-50/50 border-emerald-100' : 'bg-rose-50/50 border-rose-100'} animate-in fade-in slide-in-from-bottom-2`}>
+          <div className="flex items-center gap-2 mb-2">
+            {selectedOption === currentQ.answer ? 
+              <span className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">CORRECT</span> :
+              <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">WRONG</span>
+            }
+            <h4 className="text-sm font-bold text-slate-800">詳細解說 (Detailed Explanation)</h4>
+          </div>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            {renderFormattedText(currentQ.explanation)}
           </p>
-          <p className="text-sm text-slate-600">{currentQ.explanation}</p>
         </div>
       )}
 

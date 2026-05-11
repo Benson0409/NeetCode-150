@@ -3,7 +3,7 @@ import { ChevronLeft, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { QuizEngine } from '../components/QuizEngine';
 import type { ProblemData, QuizQuestion } from '../types';
-import questionsData from '../data/questions.json';
+import questionsPool from '../data/questions_pool.json';
 
 interface ProblemProps {
   data: ProblemData;
@@ -15,15 +15,44 @@ interface ProblemProps {
 export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Load questions for the current problem
-  const problemQuestions = (questionsData as { problemId: string, questions: QuizQuestion[] }[])
+  // Load questions for the current problem from the pool
+  const problemQuestions = (questionsPool as { problemId: string, questions: QuizQuestion[] }[])
     .find(q => q.problemId === data.id)?.questions || [];
 
-  // Randomize questions order
+  // Randomize questions order and pick 10
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
 
   useEffect(() => {
-    setQuestions([...problemQuestions].sort(() => Math.random() - 0.5));
+    // Group questions by difficulty
+    const easyPool = problemQuestions.filter(q => q.difficulty === 'Easy');
+    const mediumPool = problemQuestions.filter(q => q.difficulty === 'Medium');
+    const hardPool = problemQuestions.filter(q => q.difficulty === 'Hard');
+
+    // Helper to shuffle and pick N
+    const pickRandom = (pool: QuizQuestion[], n: number) => {
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, n);
+    };
+
+    // Distribution: 40% Easy (6), 40% Medium (6), 20% Hard (3)
+    let selectedEasy = pickRandom(easyPool, 6);
+    let selectedMedium = pickRandom(mediumPool, 6);
+    let selectedHard = pickRandom(hardPool, 3);
+
+    // Combine and shuffle final set
+    const finalSet = [...selectedEasy, ...selectedMedium, ...selectedHard].sort(() => Math.random() - 0.5);
+    
+    // If we don't have enough (e.g. some pools were small), fallback to random from full pool
+    if (finalSet.length < 15) {
+      const remainingNeeded = 15 - finalSet.length;
+      const alreadyPickedIds = new Set(finalSet.map(q => q.id));
+      const poolRemaining = problemQuestions.filter(q => !alreadyPickedIds.has(q.id));
+      const additional = pickRandom(poolRemaining, remainingNeeded);
+      setQuestions([...finalSet, ...additional].sort(() => Math.random() - 0.5));
+    } else {
+      setQuestions(finalSet);
+    }
+    
     setIsSuccess(false);
   }, [data.id]);
 

@@ -6,6 +6,8 @@ export interface PuzzleBlock {
 
 export interface QuizQuestion {
   id: string;
+  difficulty?: string;
+  testPoint?: string;
   question: string;
   options: string[];
   answer: number;
