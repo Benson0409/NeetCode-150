@@ -1,0 +1,63 @@
+{
+  "code": [
+    "def twoSum(nums, target):",
+    "    prevMap = {}  # val : index",
+    "    for i, n in enumerate(nums):",
+    "        diff = target - n",
+    "        if diff in prevMap:",
+    "            return [prevMap[diff], i]",
+    "        prevMap[n] = i"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": [2, 7, 11, 15], "map": null, "pointer": null, "num": null },
+      "explanation": "呼叫 `twoSum`，尋找陣列中兩數相加等於 `target = 9` 的索引。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": [2, 7, 11, 15], "map": {} },
+      "explanation": "執行 `prevMap = {}`。建立一個空字典，準備儲存「數字 -> 該數字的索引值」的對應關係。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [2, 7, 11, 15], "map": {}, "pointer": 0, "num": 2 },
+      "explanation": "進入 `for` 迴圈。指針 `i = 0`，拿出第一個數字 `n = 2`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [2, 7, 11, 15], "map": {}, "pointer": 0, "num": 2, "checkTarget": 7 },
+      "explanation": "執行 `diff = target - n`。計算目標差值：`diff = 9 - 2 = 7`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [2, 7, 11, 15], "map": {}, "checkKey": "7", "pointer": 0, "num": 2 },
+      "explanation": "執行 `if diff in prevMap:`。檢查數字 `7` 是否在字典中？目前字典是空的，條件不成立。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [2, 7, 11, 15], "map": { "2": 0 }, "pointer": 0, "num": 2 },
+      "explanation": "執行 `prevMap[n] = i`。將目前數字 `2` 與其索引 `0` 存入字典中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [2, 7, 11, 15], "map": { "2": 0 }, "pointer": 1, "num": 7 },
+      "explanation": "回到 `for` 迴圈。指針 `i = 1`，拿出第二個數字 `n = 7`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [2, 7, 11, 15], "map": { "2": 0 }, "pointer": 1, "num": 7, "checkTarget": 2 },
+      "explanation": "執行 `diff = target - n`。計算目標差值：`diff = 9 - 7 = 2`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [2, 7, 11, 15], "map": { "2": 0 }, "checkKey": "2", "pointer": 1, "num": 7 },
+      "explanation": "執行 `if diff in prevMap:`。檢查數字 `2` 是否在字典中？發現 `2` 已存在字典裡！條件成立。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [2, 7, 11, 15], "map": { "2": 0 }, "pointer": 1, "num": 7, "returnValue": [0, 1] },
+      "explanation": "執行 `return [prevMap[diff], i]`。從字典中取出 `2` 的索引 `0`，與目前的索引 `1` 一併回傳 `[0, 1]`。找到答案！"
+    }
+  ]
+}

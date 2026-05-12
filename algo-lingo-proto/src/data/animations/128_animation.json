@@ -1,0 +1,186 @@
+{
+  "code": [
+    "def longestConsecutive(nums):",
+    "    numSet = set(nums)",
+    "    longest = 0",
+    "    for n in nums:",
+    "        if (n - 1) not in numSet:",
+    "            length = 0",
+    "            while (n + length) in numSet:",
+    "                length += 1",
+    "            longest = max(length, longest)",
+    "    return longest"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": null, "pointer": null, "num": null },
+      "explanation": "呼叫 `longestConsecutive`，尋找陣列中最長連續序列的長度。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": null, "num": null },
+      "explanation": "執行 `numSet = set(nums)`。將所有數字放入 Hash Set 中，這讓我們能在 O(1) 的時間內查詢數字是否存在。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": null, "num": "longest = 0" },
+      "explanation": "執行 `longest = 0`。初始化一個變數，記錄目前找到的最長長度。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0" },
+      "explanation": "進入 `for` 迴圈。取出第一個數字 `n = 100`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0", "checkTarget": 99 },
+      "explanation": "執行 `if (n - 1) not in numSet:`。檢查 `99` 是否存在於集合中？如果不存在，代表 `100` 是一個連續序列的「起點」！"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0", "checkTarget": "length = 0" },
+      "explanation": "99 不存在，條件成立。執行 `length = 0`，開始計算以此為起點的序列長度。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0", "checkKey": "100" },
+      "explanation": "執行 `while`。檢查 `100 + 0` 是否存在？存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0", "checkTarget": "length = 1" },
+      "explanation": "執行 `length += 1`，長度變為 1。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 0", "checkKey": "101" },
+      "explanation": "回到 `while`。檢查 `100 + 1` (101) 是否存在？不存在，跳出 `while` 迴圈。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 0, "num": "longest = 1" },
+      "explanation": "執行 `longest = max(length, longest)`。更新目前最長紀錄為 1。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 1, "num": "longest = 1" },
+      "explanation": "回到 `for` 迴圈。取出下一個數字 `n = 4`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 1, "num": "longest = 1", "checkTarget": 3 },
+      "explanation": "執行 `if (n - 1) not in numSet:`。檢查 `3` 是否存在？存在！這代表 `4` 只是某個序列的「中間點」，不是起點，直接跳過不處理（以節省時間）。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1" },
+      "explanation": "回到 `for` 迴圈。取出數字 `n = 200`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1", "checkTarget": 199 },
+      "explanation": "檢查 `199` 是否存在？不存在。`200` 是一個新的起點。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1", "checkTarget": "length = 0" },
+      "explanation": "設定 `length = 0`。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1", "checkKey": "200" },
+      "explanation": "進入 `while`。`200` 存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1", "checkTarget": "length = 1" },
+      "explanation": "執行 `length += 1`，長度變為 1。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1", "checkKey": "201" },
+      "explanation": "檢查 `201` 是否存在？不存在，跳出 `while` 迴圈。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 2, "num": "longest = 1" },
+      "explanation": "執行 `longest = max(1, 1)`。最長紀錄仍是 1。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1" },
+      "explanation": "回到 `for` 迴圈。取出數字 `n = 1`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": 0 },
+      "explanation": "檢查 `0` 是否存在？不存在。`1` 是這串連續數字（1, 2, 3, 4）的起點！"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": "length = 0" },
+      "explanation": "設定 `length = 0`。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkKey": "1" },
+      "explanation": "進入 `while`。`1` 存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": "length = 1" },
+      "explanation": "長度變為 1。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkKey": "2" },
+      "explanation": "回到 `while`。檢查 `1 + 1` (2) 是否存在？存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": "length = 2" },
+      "explanation": "長度增加為 2。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkKey": "3" },
+      "explanation": "回到 `while`。檢查 `3` 是否存在？存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": "length = 3" },
+      "explanation": "長度增加為 3。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkKey": "4" },
+      "explanation": "回到 `while`。檢查 `4` 是否存在？存在。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkTarget": "length = 4" },
+      "explanation": "長度增加為 4。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 1", "checkKey": "5" },
+      "explanation": "回到 `while`。檢查 `5` 是否存在？不存在。跳出迴圈。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 3, "num": "longest = 4" },
+      "explanation": "執行 `longest = max(4, 1)`。更新目前最長紀錄為 4。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": 4, "num": "longest = 4" },
+      "explanation": "回到 `for` 迴圈，繼續取出數字 `3` 和 `2`，但因為它們前一個數字 `2` 和 `1` 都存在，所以都會直接被 `if` 條件跳過。這就是 O(N) 的關鍵。"
+    },
+    {
+      "line": 9,
+      "state": { "nums": [100, 4, 200, 1, 3, 2], "seen": [1, 2, 3, 4, 100, 200], "pointer": null, "num": "longest = 4", "returnValue": 4 },
+      "explanation": "迴圈結束。回傳最長連續序列長度 `4`。完成！"
+    }
+  ]
+}

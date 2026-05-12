@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { QuizEngine } from '../components/QuizEngine';
+import { CodeVisualizer } from '../components/visualization/CodeVisualizer';
 import type { ProblemData, QuizQuestion } from '../types';
 import questionsPool from '../data/questions_pool.json';
 
@@ -14,6 +15,8 @@ interface ProblemProps {
 
 export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemProps) {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState<'quiz' | 'animation'>('animation');
+  const [animationData, setAnimationData] = useState<any>(null);
 
   // Load questions for the current problem from the pool
   const problemQuestions = (questionsPool as { problemId: string, questions: QuizQuestion[] }[])
@@ -23,6 +26,19 @@ export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemP
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
 
   useEffect(() => {
+    // Load animation data if exists
+    const loadAnim = async () => {
+      try {
+        const mod = await import(`../data/animations/${data.id}_animation.json`);
+        setAnimationData(mod.default || mod);
+        setActiveTab('animation');
+      } catch (e) {
+        setAnimationData(null);
+        setActiveTab('quiz'); // fallback to quiz if no animation
+      }
+    };
+    loadAnim();
+
     // Group questions by difficulty
     const easyPool = problemQuestions.filter(q => q.difficulty === 'Easy');
     const mediumPool = problemQuestions.filter(q => q.difficulty === 'Medium');
@@ -88,21 +104,42 @@ export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemP
   };
 
   return (
-    <div className="max-w-6xl mx-auto min-h-screen bg-slate-50 flex flex-col p-4 md:p-8 font-sans text-slate-800">
+    <div className="w-full min-h-screen bg-slate-50 flex flex-col p-4 md:p-8 lg:p-12 xl:p-16 font-sans text-slate-800">
       
-      {/* 導覽列 */}
-      <button 
-        onClick={onBack}
-        className="flex items-center gap-1 text-slate-500 font-medium mb-6 hover:text-slate-800 transition-colors w-fit"
-      >
-        <ChevronLeft size={20} /> 返回地圖
-      </button>
+      {/* 頭部區塊：返回按鈕與 Tabs */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-1 text-slate-500 font-medium hover:text-slate-800 transition-colors w-fit"
+        >
+          <ChevronLeft size={20} /> 返回地圖
+        </button>
 
-      {/* 雙欄佈局：左側資訊，右側測驗 */}
-      <div className="flex flex-col lg:flex-row gap-8 flex-1">
+        {/* Tabs */}
+        <div className="flex bg-slate-200/50 p-1 rounded-xl w-full md:w-[400px]">
+          <button
+            onClick={() => setActiveTab('quiz')}
+            className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'quiz' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            📝 題目與測驗 (Quiz)
+          </button>
+          <button
+            onClick={() => setActiveTab('animation')}
+            className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'animation' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            disabled={!animationData}
+            title={!animationData ? "此題目尚未提供動畫" : ""}
+          >
+            ▶️ 動畫解析 (Animation)
+          </button>
+        </div>
+      </div>
+
+      {activeTab === 'quiz' ? (
+        <div className="flex flex-col lg:flex-row gap-8 flex-1">
+        {/* 雙欄佈局：左側資訊，右側測驗 */}
         
         {/* 左側：題目資訊 */}
-        <div className="flex-1 flex flex-col gap-6 lg:max-w-xl">
+        <div className="flex-1 lg:flex-[2] flex flex-col gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <div className="text-[#aa3bff] font-bold tracking-wider text-sm uppercase">Problem Info</div>
@@ -150,8 +187,9 @@ export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemP
           )}
         </div>
 
-        {/* 右側：互動測驗區 */}
-        <div className="flex-1 lg:max-w-lg lg:sticky lg:top-8 h-fit">
+        {/* 右側：互動區 */}
+        <div className="flex-1 lg:flex-[3] lg:sticky lg:top-12 h-fit flex flex-col gap-4">
+          
           {!isSuccess ? (
             <QuizEngine questions={questions} onComplete={handleComplete} />
           ) : (
@@ -179,8 +217,22 @@ export function Problem({ data, onBack, onMarkCompleted, isCompleted }: ProblemP
             </div>
           )}
         </div>
-
       </div>
+      ) : (
+        <div className="flex-1 flex flex-col w-full animate-in fade-in duration-300">
+          <div className="mb-4">
+            <h1 className="text-2xl font-extrabold text-slate-900">{data.title} - 動畫解析</h1>
+            <p className="text-slate-500 text-sm mt-1">觀察程式碼執行與資料結構的變化</p>
+          </div>
+          {animationData ? (
+            <CodeVisualizer data={animationData} />
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-slate-400">
+              載入動畫中...
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

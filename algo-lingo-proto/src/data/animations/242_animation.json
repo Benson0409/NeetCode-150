@@ -1,0 +1,112 @@
+{
+  "code": [
+    "def isAnagram(s, t):",
+    "    if len(s) != len(t):",
+    "        return False",
+    "    count = {}",
+    "    for i in range(len(s)):",
+    "        count[s[i]] = 1 + count.get(s[i], 0)",
+    "        count[t[i]] = count.get(t[i], 0) - 1",
+    "    for c in count:",
+    "        if count[c] != 0:",
+    "            return False",
+    "    return True"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": null, "pointer": null },
+      "explanation": "呼叫函式 `isAnagram`，傳入兩字串（此處以陣列表示字元）：\n`s = \"rat\"`\n`t = \"tar\"`。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": null, "pointer": null },
+      "explanation": "執行 `if len(s) != len(t):`。比較兩字串長度，皆為 3，長度相等，所以不會 return False。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": {}, "pointer": null },
+      "explanation": "執行 `count = {}`。建立一個空的字典 `count`，用來計算每個字元出現的淨次數。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": {}, "pointer": 0 },
+      "explanation": "進入第一個 `for` 迴圈，用指針 `i` 遍歷字串。指針起始位置為 `i = 0`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1 }, "pointer": 0 },
+      "explanation": "讀取 `s[0]` 為 `'r'`，將字典中 `'r'` 的計數 +1。此時 `count['r'] = 1`。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": -1 }, "pointer": 0 },
+      "explanation": "讀取 `t[0]` 為 `'t'`，將字典中 `'t'` 的計數 -1。此時 `count['t'] = -1`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": -1 }, "pointer": 1 },
+      "explanation": "回到 `for` 迴圈，指針移動到 `i = 1`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": -1, "a": 1 }, "pointer": 1 },
+      "explanation": "讀取 `s[1]` 為 `'a'`，將字典中 `'a'` 的計數 +1。此時 `count['a'] = 1`。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": -1, "a": 0 }, "pointer": 1 },
+      "explanation": "讀取 `t[1]` 為 `'a'`，將字典中 `'a'` 的計數 -1。此時 `'a'` 的計數剛好抵銷歸零！"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": -1, "a": 0 }, "pointer": 2 },
+      "explanation": "回到 `for` 迴圈，指針移動到最後一個字元 `i = 2`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 1, "t": 0, "a": 0 }, "pointer": 2 },
+      "explanation": "讀取 `s[2]` 為 `'t'`，將字典中 `'t'` 的計數 +1。此時 `'t'` 的計數抵銷歸零！"
+    },
+    {
+      "line": 6,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": 2 },
+      "explanation": "讀取 `t[2]` 為 `'r'`，將字典中 `'r'` 的計數 -1。此時 `'r'` 的計數也抵銷歸零！"
+    },
+    {
+      "line": 7,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "r" },
+      "explanation": "第一個迴圈結束。進入第二個 `for` 迴圈，準備檢查字典內所有字元的計數是否皆為 0。檢查 `'r'`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "r" },
+      "explanation": "`count['r'] == 0`，沒有不等於 0，所以繼續。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "t" },
+      "explanation": "迴圈繼續，檢查下一個字元 `'t'`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "t" },
+      "explanation": "`count['t'] == 0`，沒有不等於 0，所以繼續。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "a" },
+      "explanation": "迴圈繼續，檢查下一個字元 `'a'`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "checkKey": "a" },
+      "explanation": "`count['a'] == 0`，也沒有不等於 0。"
+    },
+    {
+      "line": 10,
+      "state": { "nums": ["r", "a", "t"], "seen": ["t", "a", "r"], "map": { "r": 0, "t": 0, "a": 0 }, "pointer": null, "returnValue": true },
+      "explanation": "所有字元的計數均為 0，代表兩個字串的字母種類與數量完全一致，回傳 `True`！"
+    }
+  ]
+}

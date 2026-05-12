@@ -1,0 +1,162 @@
+{
+  "code": [
+    "def productExceptSelf(nums):",
+    "    res = [1] * (len(nums))",
+    "    prefix = 1",
+    "    for i in range(len(nums)):",
+    "        res[i] = prefix",
+    "        prefix *= nums[i]",
+    "    postfix = 1",
+    "    for i in range(len(nums) - 1, -1, -1):",
+    "        res[i] *= postfix",
+    "        postfix *= nums[i]",
+    "    return res"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": [1, 2, 3, 4], "pointer": null, "num": null },
+      "explanation": "呼叫 `productExceptSelf`，計算除自身以外的陣列乘積。傳入 `nums = [1, 2, 3, 4]`。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": [1, 1, 1, 1], "pointer": null, "num": null },
+      "explanation": "執行 `res = [1] * len(nums)`。建立一個長度與 `nums` 相同的陣列，並將所有元素初始化為 1。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [1, 1, 1, 1], "pointer": null, "num": "prefix = 1" },
+      "explanation": "執行 `prefix = 1`。宣告變數 `prefix` 用來記錄當前元素「左側」所有數字的乘積。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 0, "num": "prefix = 1" },
+      "explanation": "進入第一個 `for` 迴圈（由左至右掃描）。指針 `i = 0`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 0, "num": "prefix = 1" },
+      "explanation": "執行 `res[i] = prefix`。將目前累積的 `prefix` (1) 存入 `res[0]`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 0, "num": "prefix = 1" },
+      "explanation": "執行 `prefix *= nums[i]`。將目前的數字 `1` 乘進 `prefix`，更新為 1 * 1 = 1。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 1, "num": "prefix = 1" },
+      "explanation": "回到迴圈。指針移動到 `i = 1`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 1, "num": "prefix = 1" },
+      "explanation": "執行 `res[i] = prefix`。將目前累積的 `prefix` (1) 存入 `res[1]`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 1, "num": "prefix = 2" },
+      "explanation": "執行 `prefix *= nums[i]`。將目前的數字 `2` 乘進 `prefix`，更新為 1 * 2 = 2。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 1, 1, 1], "pointer": 2, "num": "prefix = 2" },
+      "explanation": "回到迴圈。指針移動到 `i = 2`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [1, 1, 2, 1], "pointer": 2, "num": "prefix = 2" },
+      "explanation": "執行 `res[i] = prefix`。將目前累積的 `prefix` (2) 存入 `res[2]`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 1, 2, 1], "pointer": 2, "num": "prefix = 6" },
+      "explanation": "執行 `prefix *= nums[i]`。將目前的數字 `3` 乘進 `prefix`，更新為 2 * 3 = 6。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 1, 2, 1], "pointer": 3, "num": "prefix = 6" },
+      "explanation": "回到迴圈。指針移動到最後一個元素 `i = 3`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 3, "num": "prefix = 6" },
+      "explanation": "執行 `res[i] = prefix`。將目前累積的 `prefix` (6) 存入 `res[3]`。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 3, "num": "prefix = 24" },
+      "explanation": "執行 `prefix *= nums[i]`。更新 `prefix` 為 6 * 4 = 24。"
+    },
+    {
+      "line": 6,
+      "state": { "nums": [1, 1, 2, 6], "pointer": null, "num": "postfix = 1" },
+      "explanation": "前綴乘積計算完畢！現在 `res` 裡面存的是每個元素「左側的乘積」。執行 `postfix = 1`，準備從右到左進行第二次掃描。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 3, "num": "postfix = 1" },
+      "explanation": "進入第二個 `for` 迴圈（由右至左掃描）。指針來到最後一個元素 `i = 3`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 3, "num": "postfix = 1" },
+      "explanation": "執行 `res[i] *= postfix`。將 `res[3]` 乘上 `postfix`。6 * 1 = 6。"
+    },
+    {
+      "line": 9,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 3, "num": "postfix = 4" },
+      "explanation": "執行 `postfix *= nums[i]`。將目前的數字 `4` 乘進 `postfix`，更新為 1 * 4 = 4。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [1, 1, 2, 6], "pointer": 2, "num": "postfix = 4" },
+      "explanation": "回到迴圈。指針向左移動到 `i = 2`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [1, 1, 8, 6], "pointer": 2, "num": "postfix = 4" },
+      "explanation": "執行 `res[i] *= postfix`。將 `res[2]` 乘上 `postfix`。2 * 4 = 8。"
+    },
+    {
+      "line": 9,
+      "state": { "nums": [1, 1, 8, 6], "pointer": 2, "num": "postfix = 12" },
+      "explanation": "執行 `postfix *= nums[i]`。將目前的數字 `3` 乘進 `postfix`，更新為 4 * 3 = 12。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [1, 1, 8, 6], "pointer": 1, "num": "postfix = 12" },
+      "explanation": "回到迴圈。指針向左移動到 `i = 1`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [1, 12, 8, 6], "pointer": 1, "num": "postfix = 12" },
+      "explanation": "執行 `res[i] *= postfix`。將 `res[1]` 乘上 `postfix`。1 * 12 = 12。"
+    },
+    {
+      "line": 9,
+      "state": { "nums": [1, 12, 8, 6], "pointer": 1, "num": "postfix = 24" },
+      "explanation": "執行 `postfix *= nums[i]`。將目前的數字 `2` 乘進 `postfix`，更新為 12 * 2 = 24。"
+    },
+    {
+      "line": 7,
+      "state": { "nums": [1, 12, 8, 6], "pointer": 0, "num": "postfix = 24" },
+      "explanation": "回到迴圈。指針向左移動到第一個元素 `i = 0`。"
+    },
+    {
+      "line": 8,
+      "state": { "nums": [24, 12, 8, 6], "pointer": 0, "num": "postfix = 24" },
+      "explanation": "執行 `res[i] *= postfix`。將 `res[0]` 乘上 `postfix`。1 * 24 = 24。"
+    },
+    {
+      "line": 9,
+      "state": { "nums": [24, 12, 8, 6], "pointer": 0, "num": "postfix = 24" },
+      "explanation": "執行 `postfix *= nums[i]`。此為最後一步，更新 `postfix` 為 24 * 1 = 24。"
+    },
+    {
+      "line": 10,
+      "state": { "nums": [24, 12, 8, 6], "pointer": null, "returnValue": [24, 12, 8, 6] },
+      "explanation": "迴圈結束。執行 `return res`。每個元素現在都等於「左側乘積 × 右側乘積」，成功在 O(N) 內算出答案！"
+    }
+  ]
+}

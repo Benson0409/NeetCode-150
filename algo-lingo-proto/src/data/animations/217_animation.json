@@ -1,0 +1,83 @@
+{
+  "code": [
+    "def containsDuplicate(nums):",
+    "    seen = set()",
+    "    for num in nums:",
+    "        if num in seen:",
+    "            return True",
+    "        seen.add(num)",
+    "    return False"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": [1, 2, 3, 1], "seen": null, "pointer": null, "num": null, "checkTarget": null, "returnValue": null },
+      "explanation": "呼叫函式 `containsDuplicate`，傳入陣列 `nums = [1, 2, 3, 1]`。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": [1, 2, 3, 1], "seen": [], "pointer": null, "num": null, "checkTarget": null, "returnValue": null },
+      "explanation": "執行 `seen = set()`。在記憶體中建立一個空的 Hash Set，準備用來記錄已經出現過的數字。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [1, 2, 3, 1], "seen": [], "pointer": 0, "num": 1, "checkTarget": null, "returnValue": null },
+      "explanation": "進入 `for` 迴圈。指針指向第一個元素（index 0），取出數字 `num = 1`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 2, 3, 1], "seen": [], "pointer": 0, "num": 1, "checkTarget": 1, "returnValue": null },
+      "explanation": "執行 `if num in seen:`。檢查數字 `1` 是否已經存在於 `seen` 集合中？目前 `seen` 是空的，所以條件不成立。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1], "pointer": 0, "num": 1, "checkTarget": null, "returnValue": null },
+      "explanation": "執行 `seen.add(num)`。將數字 `1` 加入 `seen` 集合中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1], "pointer": 1, "num": 2, "checkTarget": null, "returnValue": null },
+      "explanation": "回到 `for` 迴圈。指針移動到下一個元素（index 1），取出數字 `num = 2`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1], "pointer": 1, "num": 2, "checkTarget": 2, "returnValue": null },
+      "explanation": "執行 `if num in seen:`。檢查數字 `2` 是否在 `seen` 中？目前裡面只有 `1`，條件不成立。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2], "pointer": 1, "num": 2, "checkTarget": null, "returnValue": null },
+      "explanation": "執行 `seen.add(num)`。將數字 `2` 加入 `seen` 集合中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2], "pointer": 2, "num": 3, "checkTarget": null, "returnValue": null },
+      "explanation": "回到 `for` 迴圈。指針移動到 index 2，取出數字 `num = 3`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2], "pointer": 2, "num": 3, "checkTarget": 3, "returnValue": null },
+      "explanation": "執行 `if num in seen:`。檢查數字 `3` 是否在 `seen` 中？不在其中，條件不成立。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2, 3], "pointer": 2, "num": 3, "checkTarget": null, "returnValue": null },
+      "explanation": "執行 `seen.add(num)`。將數字 `3` 加入 `seen` 集合中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2, 3], "pointer": 3, "num": 1, "checkTarget": null, "returnValue": null },
+      "explanation": "回到 `for` 迴圈。指針移動到最後一個元素（index 3），取出數字 `num = 1`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2, 3], "pointer": 3, "num": 1, "checkTarget": 1, "returnValue": null },
+      "explanation": "執行 `if num in seen:`。檢查數字 `1` 是否在 `seen` 中？發現 `1` 已經存在集合裡了！條件成立。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": [1, 2, 3, 1], "seen": [1, 2, 3], "pointer": 3, "num": 1, "checkTarget": null, "returnValue": true },
+      "explanation": "執行 `return True`。找到重複的數字，函式終止並回傳 `True`。"
+    }
+  ]
+}

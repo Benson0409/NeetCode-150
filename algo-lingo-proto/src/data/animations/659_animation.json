@@ -1,0 +1,131 @@
+{
+  "code": [
+    "def encode(strs):",
+    "    res = \"\"",
+    "    for s in strs:",
+    "        res += str(len(s)) + \"#\" + s",
+    "    return res",
+    "",
+    "def decode(s):",
+    "    res, i = [], 0",
+    "    while i < len(s):",
+    "        j = i",
+    "        while s[j] != \"#\": j += 1",
+    "        length = int(s[i:j])",
+    "        res.append(s[j+1 : j+1+length])",
+    "        i = j + 1 + length",
+    "    return res"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": ["cat", "dog"], "num": null, "pointer": null, "returnValue": null },
+      "explanation": "呼叫 `encode`，準備將字串陣列 `[\"cat\", \"dog\"]` 編碼成單一字串。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": ["cat", "dog"], "num": "", "pointer": null },
+      "explanation": "執行 `res = \"\"`。初始化結果字串。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": ["cat", "dog"], "num": "", "pointer": 0 },
+      "explanation": "進入 `for` 迴圈。指針指向第一個字串 `\"cat\"`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["cat", "dog"], "num": "3#cat", "pointer": 0 },
+      "explanation": "執行 `res += ...`。將長度 (3)、分隔符 (#) 與字串 (\"cat\") 拼接。結果變成 `\"3#cat\"`。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": ["cat", "dog"], "num": "3#cat", "pointer": 1 },
+      "explanation": "回到迴圈。指針指向第二個字串 `\"dog\"`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["cat", "dog"], "num": "3#cat3#dog", "pointer": 1 },
+      "explanation": "再次拼接。結果變成 `\"3#cat3#dog\"`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["cat", "dog"], "num": "3#cat3#dog", "pointer": null, "returnValue": "3#cat3#dog" },
+      "explanation": "迴圈結束。回傳編碼後的字串 `\"3#cat3#dog\"`。"
+    },
+    {
+      "line": 6,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": null },
+      "explanation": "接著呼叫 `decode`，將剛剛的字串解碼還原。"
+    },
+    {
+      "line": 7,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": 0 },
+      "explanation": "執行 `res, i = [], 0`。初始化空陣列 `res`，並設定指針 `i = 0`。"
+    },
+    {
+      "line": 8,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": 0 },
+      "explanation": "進入 `while` 迴圈，條件是 `i` 尚未到達字串結尾。"
+    },
+    {
+      "line": 9,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": 0, "checkTarget": 0 },
+      "explanation": "執行 `j = i`。設定另一個掃描指針 `j`，用來尋找分隔符 `#`。"
+    },
+    {
+      "line": 10,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": 0, "checkTarget": 1 },
+      "explanation": "進入內層 `while`，只要 `s[j]` 不是 `#` 就往後找。`j` 移動到索引 1 找到了 `#`！"
+    },
+    {
+      "line": 11,
+      "state": { "num": "3#cat3#dog", "seen": [], "pointer": 0, "checkTarget": 1 },
+      "explanation": "執行 `length = int(s[i:j])`。擷取 `i` 到 `j` 之間的字串（\"3\"）並轉為數字，得知長度為 3。"
+    },
+    {
+      "line": 12,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 0, "checkTarget": 1 },
+      "explanation": "執行 `res.append(...)`。從 `#` 的下一格開始，擷取長度 3 的字串 `\"cat\"`，加入結果陣列中。"
+    },
+    {
+      "line": 13,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 5, "checkTarget": null },
+      "explanation": "執行 `i = j + 1 + length`。將指針 `i` 直接跳到下一個字串編碼的開頭（索引 5）。"
+    },
+    {
+      "line": 8,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 5 },
+      "explanation": "回到外層迴圈，繼續處理下一段。"
+    },
+    {
+      "line": 9,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 5, "checkTarget": 5 },
+      "explanation": "執行 `j = i`。初始化內部掃描指針 `j = 5`。"
+    },
+    {
+      "line": 10,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 5, "checkTarget": 6 },
+      "explanation": "內層迴圈尋找 `#`，`j` 移動到索引 6 找到了 `#`。"
+    },
+    {
+      "line": 11,
+      "state": { "num": "3#cat3#dog", "seen": ["cat"], "pointer": 5, "checkTarget": 6 },
+      "explanation": "讀取長度，得到數字 3。"
+    },
+    {
+      "line": 12,
+      "state": { "num": "3#cat3#dog", "seen": ["cat", "dog"], "pointer": 5, "checkTarget": 6 },
+      "explanation": "從 `#` 的下一格開始擷取長度 3 的字串 `\"dog\"`，加入結果陣列。"
+    },
+    {
+      "line": 13,
+      "state": { "num": "3#cat3#dog", "seen": ["cat", "dog"], "pointer": 10, "checkTarget": null },
+      "explanation": "指針 `i` 更新為 10，已到達字串尾端。"
+    },
+    {
+      "line": 14,
+      "state": { "num": "3#cat3#dog", "seen": ["cat", "dog"], "pointer": 10, "returnValue": ["cat", "dog"] },
+      "explanation": "迴圈結束，回傳解碼後的陣列 `[\"cat\", \"dog\"]`，完美還原！"
+    }
+  ]
+}

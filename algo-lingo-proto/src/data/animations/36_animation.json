@@ -1,0 +1,137 @@
+{
+  "code": [
+    "def isValidSudoku(board):",
+    "    rows = collections.defaultdict(set)",
+    "    cols = collections.defaultdict(set)",
+    "    squares = collections.defaultdict(set)",
+    "    for r in range(9):",
+    "        for c in range(9):",
+    "            val = board[r][c]",
+    "            if val == \".\": continue",
+    "            if (val in rows[r] or",
+    "                val in cols[c] or",
+    "                val in squares[(r//3, c//3)]):",
+    "                return False",
+    "            rows[r].add(val)",
+    "            cols[c].add(val)",
+    "            squares[(r//3, c//3)].add(val)",
+    "    return True"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "map": null, "pointer": null, "num": null },
+      "explanation": "呼叫 `isValidSudoku`，驗證數獨盤面是否合法。"
+    },
+    {
+      "line": 1,
+      "state": { "map": {}, "pointer": null, "num": null },
+      "explanation": "執行 `rows = ...`。初始化一個字典用來追蹤「每一行」出現過的數字。"
+    },
+    {
+      "line": 2,
+      "state": { "map": {}, "pointer": null, "num": null },
+      "explanation": "執行 `cols = ...`。初始化一個字典用來追蹤「每一列」出現過的數字。"
+    },
+    {
+      "line": 3,
+      "state": { "map": {}, "pointer": null, "num": null },
+      "explanation": "執行 `squares = ...`。初始化一個字典用來追蹤「每個 3x3 小方塊」出現過的數字。"
+    },
+    {
+      "line": 4,
+      "state": { "map": {}, "pointer": 0, "num": null },
+      "explanation": "進入外層 `for` 迴圈。指針 `r = 0`，開始掃描第 0 行。"
+    },
+    {
+      "line": 5,
+      "state": { "map": {}, "pointer": 0, "num": null },
+      "explanation": "進入內層 `for` 迴圈。指針 `c = 0`，來到第 0 列。目前座標 `(0, 0)`。"
+    },
+    {
+      "line": 6,
+      "state": { "map": {}, "pointer": 0, "num": "5" },
+      "explanation": "執行 `val = board[r][c]`。讀取該格的內容，假設數字為 `'5'`。"
+    },
+    {
+      "line": 7,
+      "state": { "map": {}, "pointer": 0, "num": "5" },
+      "explanation": "執行 `if val == \".\":`。檢查是否為空位？不是空位，繼續執行。"
+    },
+    {
+      "line": 8,
+      "state": { "map": {}, "pointer": 0, "num": "5", "checkKey": "Row 0" },
+      "explanation": "執行 `if (val in rows[r]...`。檢查 `'5'` 是否在 `Row 0` 出現過？沒有。"
+    },
+    {
+      "line": 9,
+      "state": { "map": {}, "pointer": 0, "num": "5", "checkKey": "Col 0" },
+      "explanation": "檢查 `'5'` 是否在 `Col 0` 出現過？沒有。"
+    },
+    {
+      "line": 10,
+      "state": { "map": {}, "pointer": 0, "num": "5", "checkKey": "Square (0,0)" },
+      "explanation": "檢查 `'5'` 是否在左上角小方塊 `Square (0,0)` 出現過？沒有。條件皆不成立。"
+    },
+    {
+      "line": 12,
+      "state": { "map": { "Row 0": ["5"] }, "pointer": 0, "num": "5" },
+      "explanation": "執行 `rows[r].add(val)`。將 `'5'` 加入 `Row 0` 的集合中。"
+    },
+    {
+      "line": 13,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"] }, "pointer": 0, "num": "5" },
+      "explanation": "執行 `cols[c].add(val)`。將 `'5'` 加入 `Col 0` 的集合中。"
+    },
+    {
+      "line": 14,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5" },
+      "explanation": "執行 `squares[...].add(val)`。將 `'5'` 加入 `Square (0,0)` 的集合中。"
+    },
+    {
+      "line": 5,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 1, "num": null },
+      "explanation": "回到內層迴圈。指針 `c = 1`，移動到下一格。"
+    },
+    {
+      "line": 6,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 1, "num": "." },
+      "explanation": "執行 `val = board[r][c]`。讀取該格，假設為空位 `'.'`。"
+    },
+    {
+      "line": 7,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 1, "num": "." },
+      "explanation": "執行 `if val == \".\": continue`。發現是空位，直接跳過本回合。"
+    },
+    {
+      "line": 5,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": null },
+      "explanation": "假設數小時後，經過了大量檢查，我們來到了另一格 `(4, 0)`。"
+    },
+    {
+      "line": 6,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5" },
+      "explanation": "執行 `val = board[r][c]`。讀取該格，發現又是一個 `'5'`！"
+    },
+    {
+      "line": 7,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5" },
+      "explanation": "不是空位，繼續執行。"
+    },
+    {
+      "line": 8,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5", "checkKey": "Row 4" },
+      "explanation": "檢查 `'5'` 是否在 `Row 4` 出現過？沒有。"
+    },
+    {
+      "line": 9,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5", "checkKey": "Col 0" },
+      "explanation": "檢查 `'5'` 是否在 `Col 0` 出現過？發現已經存在了！條件成立。"
+    },
+    {
+      "line": 11,
+      "state": { "map": { "Row 0": ["5"], "Col 0": ["5"], "Square (0,0)": ["5"] }, "pointer": 0, "num": "5", "returnValue": false },
+      "explanation": "違反規則：同一列出現重複數字，立刻終止並回傳 `False`！"
+    }
+  ]
+}

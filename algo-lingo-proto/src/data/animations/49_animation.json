@@ -1,0 +1,72 @@
+{
+  "code": [
+    "def groupAnagrams(strs):",
+    "    res = collections.defaultdict(list)",
+    "    for s in strs:",
+    "        sorted_s = \"\".join(sorted(s))",
+    "        res[sorted_s].append(s)",
+    "    return list(res.values())"
+  ],
+  "steps": [
+    {
+      "line": 0,
+      "state": { "nums": ["eat", "tea", "tan"], "map": null, "pointer": null, "num": null },
+      "explanation": "呼叫 `groupAnagrams`，傳入字串陣列 `strs = [\"eat\", \"tea\", \"tan\"]`。"
+    },
+    {
+      "line": 1,
+      "state": { "nums": ["eat", "tea", "tan"], "map": {} },
+      "explanation": "執行 `res = collections.defaultdict(list)`。建立一個字典 `res`，用來將相同字母組合的字串分類在一起。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": ["eat", "tea", "tan"], "map": {}, "pointer": 0, "num": "eat" },
+      "explanation": "進入 `for` 迴圈。指針指向第一個字串 `s = \"eat\"`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["eat", "tea", "tan"], "map": {}, "pointer": 0, "num": "aet" },
+      "explanation": "執行 `sorted_s = \"\".join(sorted(s))`。將 `\"eat\"` 的字母重新排序，得到標準化結果 `\"aet\"` 作為 Key。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat"] }, "pointer": 0, "num": "aet" },
+      "explanation": "執行 `res[sorted_s].append(s)`。將原始字串 `\"eat\"` 加入到字典中 Key 為 `\"aet\"` 的列表中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat"] }, "pointer": 1, "num": "tea" },
+      "explanation": "回到 `for` 迴圈。指針指向第二個字串 `s = \"tea\"`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat"] }, "pointer": 1, "num": "aet" },
+      "explanation": "執行 `sorted_s = \"\".join(sorted(s))`。將 `\"tea\"` 排序，同樣得到標準化 Key `\"aet\"`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat", "tea"] }, "pointer": 1, "num": "aet", "checkKey": "aet" },
+      "explanation": "執行 `res[sorted_s].append(s)`。字典中已存在 `\"aet\"`，直接將 `\"tea\"` 加入到該列表中。"
+    },
+    {
+      "line": 2,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat", "tea"] }, "pointer": 2, "num": "tan" },
+      "explanation": "回到 `for` 迴圈。指針指向最後一個字串 `s = \"tan\"`。"
+    },
+    {
+      "line": 3,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat", "tea"] }, "pointer": 2, "num": "ant" },
+      "explanation": "執行 `sorted_s = \"\".join(sorted(s))`。將 `\"tan\"` 排序，得到新的 Key `\"ant\"`。"
+    },
+    {
+      "line": 4,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat", "tea"], "ant": ["tan"] }, "pointer": 2, "num": "ant" },
+      "explanation": "執行 `res[sorted_s].append(s)`。將 `\"tan\"` 加入到新的分類 `\"ant\"` 中。"
+    },
+    {
+      "line": 5,
+      "state": { "nums": ["eat", "tea", "tan"], "map": { "aet": ["eat", "tea"], "ant": ["tan"] }, "returnValue": [["eat", "tea"], ["tan"]] },
+      "explanation": "迴圈結束。執行 `return list(res.values())`。取出字典中所有的列表並回傳，完成字母異位詞的分組！"
+    }
+  ]
+}
